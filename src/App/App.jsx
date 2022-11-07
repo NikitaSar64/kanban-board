@@ -4,9 +4,7 @@ import './App.css';
 
 function App() {
   return (
-    <div>
-      <TaskCard/>
-    </div>
+      <TaskCard title="Backlog"/>
   );
 }
 

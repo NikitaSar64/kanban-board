@@ -1,0 +1,22 @@
+@import "../../styles/fonts.css";
+@import "../../styles/variables.css";
+
+.task-card{
+    background: #EBECF0;
+    font-size: 18px;
+    color: black;
+    padding: var(--spacing-unit-6);
+}
+
+input{
+    padding: var(--spacing-unit-3) var(--spacing-unit-4);
+    background: #FFFFFF;
+    border-radius: var(--radius);
+    border: none;
+    outline: none;
+    font-family: "Roboto";
+    font-size: 18px;
+    color: black;
+}
+
+

@@ -1,0 +1,26 @@
+@import "../../../../styles/variables.css";
+
+.btn{
+    border-radius: var(--radius);
+    border: none;
+    padding: var(--spacing-unit-3);
+    font-size: 18px;
+    color: #5E6C84;
+    cursor: pointer;
+    background: none;
+}
+
+.btn_hover:hover{
+    background: #FFFFFF;
+}
+
+.active{
+    background: #0079BF;
+    color: #FFFFFF;
+    padding: var(--spacing-unit-2) 23px;
+}
+
+
+.btn__icon{
+    margin-right: var(--spacing-unit-2);
+}

@@ -1,0 +1,7 @@
+@import '../../../../styles/variables.css';
+
+.task{
+    padding: var(--spacing-unit-4);
+    background: white;
+    border-radius: var(--spacing-unit-2);
+}
