@@ -2,21 +2,15 @@
 @import "../../styles/variables.css";
 
 .task-card{
+    box-sizing: border-box;
     background: #EBECF0;
     font-size: 18px;
     color: black;
     padding: var(--spacing-unit-6);
+    width: 282px;
+    border-radius: var(--radius-2);
 }
 
-input{
-    padding: var(--spacing-unit-3) var(--spacing-unit-4);
-    background: #FFFFFF;
-    border-radius: var(--radius);
-    border: none;
-    outline: none;
-    font-family: "Roboto";
-    font-size: 18px;
-    color: black;
+.task-card__title{
+    margin-bottom: 15px;
 }
-
-

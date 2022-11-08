@@ -1,7 +1,7 @@
 @import "../../../../styles/variables.css";
 
 .btn{
-    border-radius: var(--radius);
+    border-radius: var(--radius-1);
     border: none;
     padding: var(--spacing-unit-3);
     font-size: 18px;

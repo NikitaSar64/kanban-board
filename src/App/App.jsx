@@ -4,7 +4,10 @@ import './App.css';
 
 function App() {
   return (
-      <TaskCard title="Backlog"/>
+    <>
+      <TaskCard title="Backlog" showInput={true}/>
+      <TaskCard title="Ready" typeTask="Backlog" showDropDown={true}/>
+    </>
   );
 }
 

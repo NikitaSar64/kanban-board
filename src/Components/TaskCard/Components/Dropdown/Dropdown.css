@@ -1,0 +1,15 @@
+@import '../../../../styles/variables.css';
+
+select{
+    padding: var(--spacing-unit-3) var(--spacing-unit-4);
+    background: #FFFFFF;
+    border-radius: var(--radius-1);
+    margin-bottom: var(--spacing-unit-6);
+    border: none;
+    outline: none;
+    font-family: "Roboto";
+    font-size: 18px;
+    color: black;
+    width: 100%;
+    box-sizing: border-box;
+}

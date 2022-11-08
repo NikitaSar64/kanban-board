@@ -1,5 +1,6 @@
 :root{
-    --radius: 5px;
+    --radius-1: 5px;
+    --radius-2: 10px;
     --spacing-unit-1: 2px;
     --spacing-unit-2: 4px;
     --spacing-unit-3: 6px;

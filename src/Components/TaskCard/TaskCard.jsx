@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Components/Button/Button";
 import Task from "./Components/Task/Task";
+import Input from "./Components/Input/Input";
+import Dropdown from "./Components/Dropdown/Dropdown";
 import './TaskCard.css';
 
-const TaskCard = ({ title }) => {
+const TaskCard = ({ title, typeTask, showInput, showDropDown }) => {
     let [input, setShowInput] = useState(false);
     let [submit, isSubmit] = useState(false);
     let [task, setTask] = useState(null);
@@ -29,24 +31,25 @@ const TaskCard = ({ title }) => {
         setShowInput(false);
     }
 
+    function changeTask(e){
+        let localTasks = JSON.parse(localStorage.getItem(typeTask));
+        setTasks(tasks.push(localTasks[e.target.value - 1]));
+    }
+
     return (
         <div className="task-card">
-            <div>{title}</div>
+            <div className="task-card__title">{title}</div>
             {tasks.map(task => {
                 return (
                     <Task key={task.id} taskText={task.name}/>
                 )
             })}
-            {input && 
-            <input 
-                type="text" 
-                onChange={(e) => {
-                    setTask({id: tasks.length + 1, name: e.target.value});
-                    e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
-                    }
-                }
-                autoFocus
-                />}
+            {showInput && (input && 
+            <Input task={(e) => {
+                setTask({id: tasks.length + 1, name: e.target.value});
+                e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
+                }}/>)}
+            {showDropDown && (input && <Dropdown tasks={JSON.parse(localStorage.getItem(typeTask))} changeTask={changeTask}/>)}
             <Button 
                 showInput={() => {
                     setShowInput(!input)}}
