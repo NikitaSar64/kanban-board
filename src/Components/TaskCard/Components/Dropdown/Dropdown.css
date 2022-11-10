@@ -12,4 +12,5 @@ select{
     color: black;
     width: 100%;
     box-sizing: border-box;
+    cursor: pointer;
 }

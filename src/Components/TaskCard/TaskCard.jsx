@@ -1,58 +1,79 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "./Components/Button/Button";
 import Task from "./Components/Task/Task";
 import Input from "./Components/Input/Input";
+import Context from "../../Context/Context";
 import Dropdown from "./Components/Dropdown/Dropdown";
+import setId from "../../utils/setId";
 import './TaskCard.css';
 
-const TaskCard = ({ title, typeTask, showInput, showDropDown }) => {
+const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
+    let context = useContext(Context);
     let [input, setShowInput] = useState(false);
     let [submit, isSubmit] = useState(false);
     let [task, setTask] = useState(null);
-    let [tasks, setTasks] = useState([]);
+    let [indexTask, setIndexTask] = useState(null);
 
-    useEffect(() => {
-        if (localStorage.getItem(title)){
-            let localTasks = JSON.parse(localStorage.getItem(title));
-            setTasks(localTasks);
-        } else {
-            localStorage.setItem(title, JSON.stringify([]));
-        }
-    },[])
-
-    
-    if (!input && submit) {
-        let localTasks = JSON.parse(localStorage.getItem(title));
-        localTasks.push(task);
-        localStorage.setItem(title, JSON.stringify(localTasks)); 
-
-        setTasks(localTasks);
-        isSubmit(false);
-        setShowInput(false);
+    function selectTask(e){
+        isSubmit(true);
+        setIndexTask(e.target.value);
     }
+    
+    function submitTask() {
+        if (!input){
+            setShowInput(true);
+        }
 
-    function changeTask(e){
-        let localTasks = JSON.parse(localStorage.getItem(typeTask));
-        setTasks(tasks.push(localTasks[e.target.value - 1]));
+        if (indexTask){
+            let newTask = [];
+            let deleteTask = [...context.localStore[title], context.localStore[typeTask][indexTask]];
+            JSON.parse(localStorage.getItem(typeTask)).forEach((elem, index) => {
+                if (index != indexTask) newTask.push(elem);
+            })
+
+            localStorage.setItem(typeTask, JSON.stringify(newTask));
+            localStorage.setItem(title, JSON.stringify(deleteTask));
+
+            context.setLocalStore(state => ({
+                ...state,
+                [typeTask]: newTask,
+                [title]: [...state[title], state[typeTask][indexTask]]
+            }))
+
+            setIndexTask(null);
+            isSubmit(false);
+            setShowInput(false);
+        } else if (input && submit){
+            context.setLocalStore(state => ({
+                ...state,
+                [title]:  [...state[title], task],
+            }))
+            let taskArr = [...context.localStore[title], task];
+            localStorage.setItem(title, JSON.stringify(taskArr));
+            
+            isSubmit(false);
+            setShowInput(false);
+        }
     }
 
     return (
         <div className="task-card">
             <div className="task-card__title">{title}</div>
-            {tasks.map(task => {
+            {context.localStore[title].map(task => {
                 return (
-                    <Task key={task.id} taskText={task.name}/>
+                    <Task key={`${title}-${task.id}`} taskText={task.name}/>
                 )
             })}
-            {showInput && (input && 
+            {inputOrDropDown && (input && 
             <Input task={(e) => {
-                setTask({id: tasks.length + 1, name: e.target.value});
+                setTask({id: setId(context.localStore[title]), name: e.target.value});
                 e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
-                }}/>)}
-            {showDropDown && (input && <Dropdown tasks={JSON.parse(localStorage.getItem(typeTask))} changeTask={changeTask}/>)}
+                }}/>
+                )}
+            {!inputOrDropDown && (input && <Dropdown title={title} typeTask={typeTask} selectTask={selectTask}/>)}
             <Button 
                 showInput={() => {
-                    setShowInput(!input)}}
+                    submitTask()}}
                 input={input}
                 submit={submit}/>
         </div>
