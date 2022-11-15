@@ -1,10 +1,15 @@
 @import '../../../../styles/variables.css';
 
+
+.input__wrapper{
+    margin-right: var(--spacing-unit-4);
+}
+
 input{
-    padding: var(--spacing-unit-3) var(--spacing-unit-4);
+    padding: var(--spacing-unit-4);
     background: #FFFFFF;
     border-radius: var(--radius-1);
-    margin-bottom: var(--spacing-unit-6);
+    margin-bottom: var(--spacing-unit-8);
     border: none;
     outline: none;
     font-family: "Roboto";

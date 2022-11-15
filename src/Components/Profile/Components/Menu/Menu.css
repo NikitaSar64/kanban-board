@@ -1,0 +1,28 @@
+@import "../../../../styles/variables.css";
+
+.menu{
+    background: white;
+    width: 134px;
+    border-radius: var(--radius-1);
+    box-sizing: border-box;
+    padding: var(--spacing-unit-4);
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+.menu__item{
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.menu__arrow{
+    width: 11px;
+    height: 11px;
+    background: white;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 92px;
+    top: -5px;
+}

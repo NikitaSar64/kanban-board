@@ -1,0 +1,21 @@
+@import "../../styles/variables.css";
+
+.footer{
+    box-sizing: border-box;
+    background-color: var(--blue-color);
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-unit-9);
+}
+
+.footer__items{
+    display: flex;
+}
+
+.footer__item{
+    font-size: 18px;
+    color: #FFFFFF;
+}

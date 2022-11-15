@@ -4,11 +4,13 @@ import './Input.css';
 const Input = ({ task }) => {
 
     return (
-        <input 
-            type="text" 
-            onChange={task}
-            autoFocus
-        />
+        <div className="input__wrapper">
+            <input 
+                type="textarea" 
+                onChange={task}
+                autoFocus
+            />
+        </div>
     )
 }
 

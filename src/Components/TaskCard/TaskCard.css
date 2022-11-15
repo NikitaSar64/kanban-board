@@ -6,11 +6,34 @@
     background: #EBECF0;
     font-size: 18px;
     color: black;
-    padding: var(--spacing-unit-6);
+    padding: var(--spacing-unit-8);
     width: 282px;
     border-radius: var(--radius-2);
+    max-height: 100%;
+    /* height: fit-content; */
+}
+
+.task-card__wrapper{
+    overflow-y: auto;
+    max-height: 96%;
+    height: fit-content;
 }
 
 .task-card__title{
+    height: 4%;
     margin-bottom: 15px;
+}
+
+::-webkit-scrollbar{
+    width: 12px;
+}
+
+::-webkit-scrollbar-track{
+    background: white;
+    border-radius: var(--radius-1);
+}
+
+::-webkit-scrollbar-thumb{
+    background: #CBCBCB;
+    border-radius: var(--radius-1);
 }

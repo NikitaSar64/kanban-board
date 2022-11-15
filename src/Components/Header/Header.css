@@ -1,0 +1,13 @@
+@import "../../styles/variables.css";
+
+.header{
+    background: var(--blue-color);
+    height: 6vh;
+    color: #FFFFFF;
+    font-size: 28px;
+    line-height: 33px;
+    padding: 0 var(--spacing-unit-10);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

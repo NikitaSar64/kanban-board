@@ -13,6 +13,7 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
     let [submit, isSubmit] = useState(false);
     let [task, setTask] = useState(null);
     let [indexTask, setIndexTask] = useState(null);
+    //title = title.split(' ').join('')
 
     function selectTask(e){
         isSubmit(true);
@@ -58,24 +59,26 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
 
     return (
         <div className="task-card">
-            <div className="task-card__title">{title}</div>
-            {context.localStore[title].map(task => {
-                return (
-                    <Task key={`${title}-${task.id}`} taskText={task.name}/>
-                )
-            })}
-            {inputOrDropDown && (input && 
-            <Input task={(e) => {
-                setTask({id: setId(context.localStore[title]), name: e.target.value});
-                e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
-                }}/>
-                )}
-            {!inputOrDropDown && (input && <Dropdown title={title} typeTask={typeTask} selectTask={selectTask}/>)}
-            <Button 
-                showInput={() => {
-                    submitTask()}}
-                input={input}
-                submit={submit}/>
+            <div className="task-card__title">{title == "InProgress" ? "In Progress" : title}</div>
+            <div className="task-card__wrapper">
+                {context.localStore[title].map(task => {
+                    return (
+                        <Task key={`${title}-${task.id}`} taskText={task.name}/>
+                    )
+                })}
+                {inputOrDropDown && (input && 
+                <Input task={(e) => {
+                    setTask({id: setId(context.localStore[title]), name: e.target.value});
+                    e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
+                    }}/>
+                    )}
+                {!inputOrDropDown && (input && <Dropdown title={title} typeTask={typeTask} selectTask={selectTask}/>)}
+                <Button 
+                    showInput={() => {
+                        submitTask()}}
+                    input={input}
+                    submit={submit}/>
+            </div>
         </div>
     )
 }
