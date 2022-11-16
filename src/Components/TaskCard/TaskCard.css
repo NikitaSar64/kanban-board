@@ -9,8 +9,12 @@
     padding: var(--spacing-unit-8);
     width: 282px;
     border-radius: var(--radius-2);
-    max-height: 100%;
-    /* height: fit-content; */
+    height: fit-content;
+}
+
+.task-card_max-height{
+    height: 100%;
+    padding-bottom: 40px;
 }
 
 .task-card__wrapper{

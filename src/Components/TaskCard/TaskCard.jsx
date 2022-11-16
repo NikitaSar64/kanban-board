@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import Button from "./Components/Button/Button";
 import Task from "./Components/Task/Task";
 import Input from "./Components/Input/Input";
@@ -13,7 +13,7 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
     let [submit, isSubmit] = useState(false);
     let [task, setTask] = useState(null);
     let [indexTask, setIndexTask] = useState(null);
-    //title = title.split(' ').join('')
+    let taskWrapper = useRef(null);
 
     function selectTask(e){
         isSubmit(true);
@@ -54,13 +54,17 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
             
             isSubmit(false);
             setShowInput(false);
-        }
+        }   
     }
 
+    useEffect(() => {
+        taskWrapper.current.scrollTop = context.localStore[title].length * 40;
+    }, [input])
+    
     return (
-        <div className="task-card">
+        <div className={context.localStore[title].length > 12 ? "task-card task-card_max-height" : "task-card"}>
             <div className="task-card__title">{title == "InProgress" ? "In Progress" : title}</div>
-            <div className="task-card__wrapper">
+            <div className="task-card__wrapper" ref={taskWrapper}>
                 {context.localStore[title].map(task => {
                     return (
                         <Task key={`${title}-${task.id}`} taskText={task.name}/>
