@@ -1,10 +1,1 @@
 @import "../styles/variables.css";
-
-.tasks__wrapper{
-    height: 88vh;
-    max-height: 88vh;
-    display: flex;
-    padding: var(--spacing-unit-8) var(--spacing-unit-10);
-    justify-content: space-between;
-    box-sizing: border-box;
-}

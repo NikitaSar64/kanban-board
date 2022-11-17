@@ -1,16 +1,16 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Context from "../../../../Context/Context";
 import "./Dropdown.css";
 
 const Dropdown = ({ title, typeTask, selectTask }) => {
-    let tasksArray = useContext(Context).localStore[typeTask];
+    let tasksArray = useContext(Context);
 
     return (
             <select onChange={selectTask}>
                 <option hidden/>
-                {tasksArray.map((task, index) => {
+                {tasksArray.localStore[typeTask].map((task, index) => {
                     return (
-                            <option key={`${title}-sel-${task.id}`} value={index}>{task.name}</option>
+                            <option key={`${title}-sel-${index}`} value={index}>{task.name}</option>
                     )})
                 }
             </select>

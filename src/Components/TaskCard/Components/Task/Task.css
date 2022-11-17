@@ -8,4 +8,5 @@
     margin-right: var(--spacing-unit-4);
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }

@@ -4,7 +4,6 @@ import Task from "./Components/Task/Task";
 import Input from "./Components/Input/Input";
 import Context from "../../Context/Context";
 import Dropdown from "./Components/Dropdown/Dropdown";
-import setId from "../../utils/setId";
 import './TaskCard.css';
 
 const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
@@ -19,7 +18,7 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
         isSubmit(true);
         setIndexTask(e.target.value);
     }
-    
+
     function submitTask() {
         if (!input){
             setShowInput(true);
@@ -27,19 +26,30 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
 
         if (indexTask){
             let newTask = [];
-            let deleteTask = [...context.localStore[title], context.localStore[typeTask][indexTask]];
-            JSON.parse(localStorage.getItem(typeTask)).forEach((elem, index) => {
-                if (index != indexTask) newTask.push(elem);
+            let tmp = context.localStore[title].map((elem, index) => {
+                elem.type = title.toLowerCase();
+                elem.id = index;
+                return elem;
             })
 
-            localStorage.setItem(typeTask, JSON.stringify(newTask));
-            localStorage.setItem(title, JSON.stringify(deleteTask));
+            let count = 0;
+            let deleteTask = [...tmp, {...context.localStore[typeTask][indexTask], type: title.toLowerCase(), id: tmp.length}];
+            JSON.parse(localStorage.getItem(typeTask)).forEach((elem, index) => {
+                if (index != indexTask) {
+                    elem.id = count;
+                    count++;
+                    newTask.push(elem)
+                }
+            })
 
             context.setLocalStore(state => ({
                 ...state,
                 [typeTask]: newTask,
-                [title]: [...state[title], state[typeTask][indexTask]]
+                [title]: [...state[title], {...state[typeTask][indexTask], type: title.toLowerCase(), id: state[title].length}]
             }))
+            
+            localStorage.setItem(typeTask, JSON.stringify(newTask));
+            localStorage.setItem(title, JSON.stringify(deleteTask));
 
             setIndexTask(null);
             isSubmit(false);
@@ -63,16 +73,22 @@ const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
     
     return (
         <div className={context.localStore[title].length > 12 ? "task-card task-card_max-height" : "task-card"}>
-            <div className="task-card__title">{title == "InProgress" ? "In Progress" : title}</div>
+            <div className="task-card__title">{title === "InProgress" ? "In Progress" : title}</div>
             <div className="task-card__wrapper" ref={taskWrapper}>
-                {context.localStore[title].map(task => {
+                {context.localStore[title].map((task, index) => {
                     return (
-                        <Task key={`${title}-${task.id}`} taskText={task.name}/>
+                        <Task key={`${title}-${index}`} task={task}/>
                     )
                 })}
                 {inputOrDropDown && (input && 
                 <Input task={(e) => {
-                    setTask({id: setId(context.localStore[title]), name: e.target.value});
+                    setTask(
+                        {
+                            type: title.toLowerCase(),
+                            id: context.localStore[title].length, 
+                            name: e.target.value,
+                            description: "",
+                        });
                     e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
                     }}/>
                     )}

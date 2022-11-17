@@ -18,4 +18,5 @@
 .footer__item{
     font-size: 18px;
     color: #FFFFFF;
+    margin-right: var(--spacing-unit-4);
 }
