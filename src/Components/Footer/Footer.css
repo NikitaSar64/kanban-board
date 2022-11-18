@@ -20,3 +20,9 @@
     color: #FFFFFF;
     margin-right: var(--spacing-unit-4);
 }
+
+@media all and (max-width: 425px) {
+    .footer{
+        display: none;
+    }
+}

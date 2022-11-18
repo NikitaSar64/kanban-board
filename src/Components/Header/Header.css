@@ -11,3 +11,15 @@
     justify-content: space-between;
     align-items: center;
 }
+
+@media all and (max-width: 425px) {
+    .header{
+        font-size: 22px;
+    }
+}
+
+@media all and (max-width: 338px) {
+    .header-title{
+        display: none;
+    }
+  }

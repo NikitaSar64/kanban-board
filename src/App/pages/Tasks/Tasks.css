@@ -8,3 +8,17 @@
     justify-content: space-between;
     box-sizing: border-box;
 }
+
+@media all and (max-width: 768px) {
+    .tasks__wrapper{
+        flex-wrap: wrap;
+    }
+  }
+
+@media all and (max-width: 425px) {
+    .tasks__wrapper{
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+  }

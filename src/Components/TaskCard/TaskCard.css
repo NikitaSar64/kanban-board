@@ -41,3 +41,21 @@
     background: #CBCBCB;
     border-radius: var(--radius-1);
 }
+
+@media all and (max-width: 1024px) {
+    .task-card{
+        width: 234px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .task-card{
+        width: 282px;
+    }
+}
+
+@media all and (max-width: 425px) {
+    .task-card{
+        margin-bottom: 50px;
+    }
+}
