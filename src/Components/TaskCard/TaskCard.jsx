@@ -1,103 +1,59 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, {useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "./Components/Button/Button";
 import Task from "./Components/Task/Task";
 import Input from "./Components/Input/Input";
-import Context from "../../Context/Context";
 import Dropdown from "./Components/Dropdown/Dropdown";
 import './TaskCard.css';
 
-const TaskCard = ({ title, typeTask, inputOrDropDown }) => {
-    let context = useContext(Context);
-    let [input, setShowInput] = useState(false);
-    let [submit, isSubmit] = useState(false);
-    let [task, setTask] = useState(null);
-    let [indexTask, setIndexTask] = useState(null);
-    let taskWrapper = useRef(null);
+const TaskCard = ({ title, action, inputOrDropDown, dependentTask }) => {
+    const [submitInput, setSubmitInput] = useState(false);
+    const [submitDropDownId, setSubmitDropDownId] = useState(null);
+    const [input, showInput] = useState(false);
+    const [text, setText] = useState('');
+    const store = useSelector(state => state);
+    const dispatch = useDispatch();
 
-    function selectTask(e){
-        isSubmit(true);
-        setIndexTask(e.target.value);
-    }
-
-    function submitTask() {
-        if (!input){
-            setShowInput(true);
-        }
-
-        if (indexTask){
-            let newTask = [];
-            let tmp = context.localStore[title].map((elem, index) => {
-                elem.type = title.toLowerCase();
-                elem.id = index;
-                return elem;
-            })
-
-            let count = 0;
-            let deleteTask = [...tmp, {...context.localStore[typeTask][indexTask], type: title.toLowerCase(), id: tmp.length}];
-            JSON.parse(localStorage.getItem(typeTask)).forEach((elem, index) => {
-                if (index != indexTask) {
-                    elem.id = count;
-                    count++;
-                    newTask.push(elem)
-                }
-            })
-
-            context.setLocalStore(state => ({
-                ...state,
-                [typeTask]: newTask,
-                [title]: [...state[title], {...state[typeTask][indexTask], type: title.toLowerCase(), id: state[title].length}]
-            }))
-            
-            localStorage.setItem(typeTask, JSON.stringify(newTask));
-            localStorage.setItem(title, JSON.stringify(deleteTask));
-
-            setIndexTask(null);
-            isSubmit(false);
-            setShowInput(false);
-        } else if (input && submit){
-            context.setLocalStore(state => ({
-                ...state,
-                [title]:  [...state[title], task],
-            }))
-            let taskArr = [...context.localStore[title], task];
-            localStorage.setItem(title, JSON.stringify(taskArr));
-            
-            isSubmit(false);
-            setShowInput(false);
-        }   
-    }
-
-    useEffect(() => {
-        taskWrapper.current.scrollTop = context.localStore[title].length * 40;
-    }, [input])
-    
     return (
-        <div className={context.localStore[title].length > 12 ? "task-card task-card_max-height" : "task-card"}>
+        <div className="task-card task-card_max-height">
             <div className="task-card__title">{title === "InProgress" ? "In Progress" : title}</div>
-            <div className="task-card__wrapper" ref={taskWrapper}>
-                {context.localStore[title].map((task, index) => {
+            <div className="task-card__wrapper">
+                {store[title.toLowerCase()].map((task, index) => {
                     return (
                         <Task key={`${title}-${index}`} task={task}/>
                     )
                 })}
-                {inputOrDropDown && (input && 
+                {(input && !inputOrDropDown) && 
                 <Input task={(e) => {
-                    setTask(
-                        {
-                            type: title.toLowerCase(),
-                            id: context.localStore[title].length, 
-                            name: e.target.value,
-                            description: "",
-                        });
-                    e.target.value.length > 0 ? isSubmit(true) : isSubmit(false);
+                    setText(e.target.value);
+                    e.target.value.length > 0 ? setSubmitInput(true) : setSubmitInput(false)
                     }}/>
-                    )}
-                {!inputOrDropDown && (input && <Dropdown title={title} typeTask={typeTask} selectTask={selectTask}/>)}
+                }
+                {(input && inputOrDropDown) && <Dropdown dependentTask={dependentTask} onChange={(e) => {
+                    setSubmitInput(true);
+                    setSubmitDropDownId(e.target.value)}}/>}
                 <Button 
                     showInput={() => {
-                        submitTask()}}
+                        if (input && (submitDropDownId != null) && setSubmitInput){
+                            dispatch(action(submitDropDownId));
+                            setSubmitInput(false);
+                            showInput(false);
+                        } else if (input && submitInput){
+                            dispatch(action({
+                                type: title,
+                                id: store[title.toLowerCase()].length + 1, 
+                                name: text,
+                                description: "",
+                            }));
+                            setSubmitInput(false);
+                            showInput(false);
+                        } else {
+                            showInput(true)
+                        }
+                    }}
                     input={input}
-                    submit={submit}/>
+                    submit={submitInput}
+                    />
             </div>
         </div>
     )

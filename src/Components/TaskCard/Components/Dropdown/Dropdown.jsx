@@ -1,16 +1,16 @@
-import React, {useContext, useEffect} from "react";
-import Context from "../../../../Context/Context";
+import React from "react";
+import { useSelector } from "react-redux";
 import "./Dropdown.css";
 
-const Dropdown = ({ title, typeTask, selectTask }) => {
-    let tasksArray = useContext(Context);
+const Dropdown = ({ dependentTask, onChange }) => {
+    const store = useSelector(store => store);
 
     return (
-            <select onChange={selectTask}>
+            <select onChange={onChange}>
                 <option hidden/>
-                {tasksArray.localStore[typeTask].map((task, index) => {
+                {store[dependentTask].map(task => {
                     return (
-                            <option key={`${title}-sel-${index}`} value={index}>{task.name}</option>
+                            <option key={task.id} value={task.id}>{task.name}</option>
                     )})
                 }
             </select>

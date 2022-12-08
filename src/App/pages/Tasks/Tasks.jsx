@@ -2,6 +2,7 @@ import React from "react";
 import TaskCard from "../../../Components/TaskCard/TaskCard";
 import Header from "../../../Components/Header/Header";
 import Footer from "../../../Components/Footer/Footer";
+import { taskAddedInBacklog, taskAddedInReady, taskAddedInInProgress, taskAddedInFinished } from "../../../actions";
 import './Tasks.css';
 
 const Tasks = () => {
@@ -9,10 +10,10 @@ const Tasks = () => {
         <>
             <Header/>
             <main className="tasks__wrapper">
-                <TaskCard title="Backlog" inputOrDropDown={true}/>
-                <TaskCard title="Ready" typeTask="Backlog" inputOrDropDown={false}/>
-                <TaskCard title="InProgress" typeTask="Ready" inputOrDropDown={false}/>
-                <TaskCard title="Finished" typeTask="InProgress" inputOrDropDown={false}/>
+                <TaskCard title="Backlog" inputOrDropDown={false} action={taskAddedInBacklog}/>
+                <TaskCard title="Ready" inputOrDropDown={true} dependentTask="backlog" action={taskAddedInReady}/>
+                <TaskCard title="InProgress" inputOrDropDown={true} dependentTask="ready" action={taskAddedInInProgress}/>
+                <TaskCard title="Finished" inputOrDropDown={true} dependentTask="InProgress" action={taskAddedInFinished}/>
             </main>
             <Footer/>
         </>
