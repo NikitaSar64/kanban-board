@@ -13,7 +13,7 @@ const Tasks = () => {
                 <TaskCard title="Backlog" inputOrDropDown={false} action={taskAddedInBacklog}/>
                 <TaskCard title="Ready" inputOrDropDown={true} dependentTask="backlog" action={taskAddedInReady}/>
                 <TaskCard title="InProgress" inputOrDropDown={true} dependentTask="ready" action={taskAddedInInProgress}/>
-                <TaskCard title="Finished" inputOrDropDown={true} dependentTask="InProgress" action={taskAddedInFinished}/>
+                <TaskCard title="Finished" inputOrDropDown={true} dependentTask="inprogress" action={taskAddedInFinished}/>
             </main>
             <Footer/>
         </>

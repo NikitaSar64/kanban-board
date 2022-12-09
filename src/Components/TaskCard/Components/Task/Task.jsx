@@ -6,7 +6,7 @@ import "./Task.css";
 const Task = ({ task }) => {
 
     return (
-        <Link to={ROUTES.task.createPath(task.type, task.id)}>
+        <Link to={ROUTES.task.createPath(task.type.toLowerCase(), task.id)}>
             <div className="task">{task.name}</div>
         </Link>
     )

@@ -61,6 +61,16 @@ const reducer = (state = initialState, action) => {
                     id: state.finished.length + 1}
                 ],
         }
+        case 'TASK_DISCRIPTION_UPDATED':
+            return {
+                ...state,
+                [action.payload.typeTask]: state[action.payload.typeTask].map((task, index) => {
+                    if (index == action.payload.id - 1){
+                        task.description = action.payload.description;
+                    }
+                    return task;
+                })
+            }
         default: return state
     }
 }

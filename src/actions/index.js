@@ -25,3 +25,14 @@ export const taskAddedInFinished = (id) => {
         payload: id,
     }
 }
+
+export const updateTaskDescription = (typeTask, description, id) => {
+    return {
+        type: 'TASK_DISCRIPTION_UPDATED',
+        payload: {
+            typeTask,
+            description,
+            id,
+        }
+    }
+}

@@ -40,7 +40,7 @@ const TaskCard = ({ title, action, inputOrDropDown, dependentTask }) => {
                             showInput(false);
                         } else if (input && submitInput){
                             dispatch(action({
-                                type: title,
+                                type: title.toLowerCase(),
                                 id: store[title.toLowerCase()].length + 1, 
                                 name: text,
                                 description: "",
